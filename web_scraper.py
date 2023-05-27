@@ -39,16 +39,16 @@ async def get_questions_answers_vedantu(url: str):
             soup = BeautifulSoup(await response.text(), 'html.parser')
             footer_section = soup.find('div', id='footerDescription')
             current_type = None
-            for child in footer_section.contents[0].find_all(["p", "h2"]):
+            for child in footer_section.contents[0].find_all(["p", "h2", "h3"]):
                 child_text = re.sub(r'\s+|&nbsp;', ' ', child.text.strip())
-                if child.name == "h2":
+                if "important questions" in child.text.lower() or "ncert solutions" in child.text.lower() or "download free pdf" in child.text.lower():
+                # if "Important Questions and Solutions Summary" in child.text or "Chapter 11 Science Class 10 Important Questions" in child.text:
                     break
                 if child_text is not None and child_text in types:
                     current_type = child_text
                     question_lists[current_type] = []
                 elif current_type is not None:
                     question_lists[current_type].append(child_text)
-        
             for question_type, questions in question_lists.items():
                 question_lists[question_type] = []
                 question_text = None
@@ -57,7 +57,7 @@ async def get_questions_answers_vedantu(url: str):
                 question_index = 0
                 answer_index = 0
                 for question in questions:
-                    
+                    print(question)
                     if re.match(r'^\d+\.', question):
                         question_index = questions.index(question)
                         if question_text is not None:
@@ -70,7 +70,9 @@ async def get_questions_answers_vedantu(url: str):
                                 for subpart_question in subpart_questions:
                                     question_lists[question_type].append(subpart_question)
                             else:
-                                question_lists[question_type][-1]["question_text"] += " " + question_text.strip()
+                                try:
+                                    question_lists[question_type][-1]["question_text"] += " " + question_text.strip()
+                                except: pass
                         question_text = re.sub(r'^\d+\.\s*', '', question)
                         ans_text = ""
                         subpart_questions = []
@@ -102,11 +104,11 @@ async def get_questions_answers_vedantu(url: str):
                                 "ans_text": ""
                             }]
                     
-                    if questions.index(question) > question_index:
+                    if question_text and questions.index(question) > question_index:
                             # print(questions.index(question), question_index)
                             if not question.lower().startswith("ans:"):
                                 question_text += "\n" + question
-                    if questions.index(question) > answer_index:
+                    if ans_text and questions.index(question) > answer_index:
                         # print(questions.index(question), answer_index)
                         ans_text += "\n" + question
                 
@@ -126,15 +128,21 @@ async def get_questions_answers_vedantu(url: str):
             for question_type, questions in question_lists.items():
                 question_lists[question_type] = [question for question in questions if question["ans_text"]]
             
-            # print(question_lists)
+            print(question_lists)
             return question_lists
+        
+chapters_urls = {
+    "Our Environment": "https://www.vedantu.com/cbse/important-questions-class-10-science-chapter-15"
+}
 
-async def add_to_database(url: str):
-    data = await get_questions_answers_vedantu(url=url)
-    result = await db["Science"].insert_one({"Chemical Reactions and Equations": data})
-    print(f"Successfully inserted 1 document")
+async def add_to_database(chapters_urls: dict):
+    for k, v in chapters_urls.items():
+        data = await get_questions_answers_vedantu(url=v)
+        result = await db["Science"].insert_one({k: data})
+    
+    print(f"Successfully inserted {len(chapters_urls)} documents.")
     
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(add_to_database("https://www.vedantu.com/cbse/important-questions-class-10-science-chapter-1"))
+    loop.run_until_complete(add_to_database(chapters_urls))
