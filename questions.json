@@ -1,5 +1,4 @@
-questions = \
-    {
+{
     "Social Science" : {
         "History": {
             "The Rise of Nationalism in Europe": [
@@ -786,7 +785,7 @@ questions = \
         ]
     },
     "Mathematics": {
-        "Triagnles" : [
+        "Triangles" : [
             "Given ΔABC ~ ΔPQR, if AB/PQ = ⅓, then find (ar ΔABC)/(ar ΔPQR).",
             "The sides of two similar triangles are in the ratio 7 : 10.  Find the ratio of areas of these triangles.",
             "In an equilateral ΔABC, D is a point on side BC such that BD = (⅓) BC. Prove that 9(AD)2 = 7(AB)2",
