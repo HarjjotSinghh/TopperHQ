@@ -18,12 +18,22 @@ vedantu_urls = [
 ]
 types = ["Very Short Answer Questions (1 Mark)",
          "1 Mark Questions",
+         "Level - 01 (01 Marks)",
+         "Level 2 (02 Marks)",
+         "Level 3 (03 Marks)",
+         "1 Mark Question",
+         "1 Marks Questions",
+         "2 Marks Questions",
+         "3 Marks Questions",
+         "4 Marks Questions",
          "Short Answer Questions (2 Marks)",
          "2 Marks Questions",
          "Short Answer Questions (3 Marks)",
          "3 Marks Questions",
+         "Long Answer Questions (4 Marks)",
          "Long Answer Questions (5 Marks)",
          "5 Marks Questions",
+         "Problems Based on Conversion of Solids"
         ]
 question_lists = {}
 child_texts = []
@@ -41,7 +51,8 @@ async def get_questions_answers_vedantu(url: str):
             current_type = None
             for child in footer_section.contents[0].find_all(["p", "h2", "h3"]):
                 child_text = re.sub(r'\s+|&nbsp;', ' ', child.text.strip())
-                if "important questions" in child.text.lower() or "ncert solutions" in child.text.lower() or "download free pdf" in child.text.lower():
+                # if "important questions" in child.text.lower()  or "ncert solutions" in child.text.lower() or "download free pdf" in child.text.lower() or "conclusion" in child.text.lower():
+                if "CBSE Class 10 Maths Probability Important Questions" in child.text:
                 # if "Important Questions and Solutions Summary" in child.text or "Chapter 11 Science Class 10 Important Questions" in child.text:
                     break
                 if child_text is not None and child_text in types:
@@ -105,17 +116,15 @@ async def get_questions_answers_vedantu(url: str):
                             }]
                     
                     if question_text and questions.index(question) > question_index:
-                            # print(questions.index(question), question_index)
                             if not question.lower().startswith("ans:"):
                                 question_text += "\n" + question
                     if ans_text and questions.index(question) > answer_index:
-                        # print(questions.index(question), answer_index)
                         ans_text += "\n" + question
                 
                     elif question_text is not None:
                         pass
 
-                if question_text is not None:
+                if question_text:
                     if ans_text:
                         question_dict = {
                             "question_text": question_text.strip(),
@@ -132,17 +141,17 @@ async def get_questions_answers_vedantu(url: str):
             return question_lists
         
 chapters_urls = {
-    "Our Environment": "https://www.vedantu.com/cbse/important-questions-class-10-science-chapter-15"
+    "Probability": "https://www.vedantu.com/cbse/important-questions-class-10-maths-chapter-15"
 }
 
 async def add_to_database(chapters_urls: dict):
     for k, v in chapters_urls.items():
         data = await get_questions_answers_vedantu(url=v)
-        result = await db["Science"].insert_one({k: data})
+        result = await db["Maths"].insert_one({k: data})
     
     print(f"Successfully inserted {len(chapters_urls)} documents.")
     
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(add_to_database(chapters_urls))
+    loop.run_until_complete(get_questions_answers_vedantu(chapters_urls["Probability"]))
