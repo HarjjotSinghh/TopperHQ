@@ -4,18 +4,6 @@ import re
 import motor.motor_asyncio
 import json
 
-vedantu_urls = [
-    "https://www.vedantu.com/cbse/important-questions-class-10-science-chapter-1",
-    "https://www.vedantu.com/cbse/important-questions-class-10-science-chapter-2",
-    "https://www.vedantu.com/cbse/important-questions-class-10-science-chapter-3",
-    "https://www.vedantu.com/cbse/important-questions-class-10-science-chapter-4",
-    "https://www.vedantu.com/cbse/important-questions-class-10-science-chapter-5",
-    "https://www.vedantu.com/cbse/important-questions-class-10-science-chapter-6",
-    "https://www.vedantu.com/cbse/important-questions-class-10-science-chapter-7",
-    "https://www.vedantu.com/cbse/important-questions-class-10-science-chapter-8",
-    "https://www.vedantu.com/cbse/important-questions-class-10-science-chapter-9",
-    "https://www.vedantu.com/cbse/important-questions-class-10-science-chapter-10",
-]
 types = ["Very Short Answer Questions (1 Mark)",
          "1 Mark Questions",
          "Level - 01 (01 Marks)",
