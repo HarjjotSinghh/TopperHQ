@@ -10,7 +10,7 @@ async def page_not_found(e):
 
 @app.route('/welcome')
 async def welcome():
-    return render_template('welcome.html')
+    return render_template('Landing page.html')
 
 
 if __name__ == '__main__':
