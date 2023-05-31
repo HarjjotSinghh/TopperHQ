@@ -37,26 +37,7 @@ child_texts = []
 sst_links_list = {}
 maths_links_list = []
 hindi_links_list = {
-    "Hindi क्षितिज": [
-        {"पद": "https://www.learncbse.in/ncert-solutions-for-class-10-kshitiz-ii-hindi-chapter-1/"},
-        {"राम-लक्ष्मण-परशुराम संवाद": "https://www.learncbse.in/ncert-solutions-for-class-10-kshitiz-ii-hindi-chapter-2/"},
-        {"सवैया और कवित्त": "https://www.learncbse.in/ncert-solutions-for-class-10-kshitiz-ii-hindi-chapter-3/"},
-        {"आत्मकथ्य": "https://www.learncbse.in/ncert-solutions-for-class-10-kshitiz-ii-hindi-chapter-4/"},
-        {"उत्साह और अट नहीं रही": "https://www.learncbse.in/ncert-solutions-for-class-10-kshitiz-ii-hindi-chapter-5/"},
-        {"यह दंतुरहित मुस्कान और फसल": "https://www.learncbse.in/ncert-solutions-for-class-10-kshitiz-ii-hindi-chapter-6/"},
-        {"छाया मत छूना": "https://www.learncbse.in/ncert-solutions-for-class-10-kshitiz-ii-hindi-chapter-7/"},
-        {"कन्यादान": "https://www.learncbse.in/ncert-solutions-for-class-10-kshitiz-ii-hindi-chapter-8/"},
-        {"संगतकार": "https://www.learncbse.in/ncert-solutions-for-class-10-kshitiz-ii-hindi-chapter-9/"},
-        {"नेताजी का चश्मा": "https://www.learncbse.in/ncert-solutions-for-class-10-kshitiz-ii-hindi-chapter-10/"},
-        {"बालगोबिन भगत": "https://www.learncbse.in/ncert-solutions-for-class-10-kshitiz-ii-hindi-chapter-11/"},
-        {"लखनवी अंदाज़": "https://www.learncbse.in/ncert-solutions-for-class-10-kshitiz-ii-hindi-chapter-12/"},
-        {"मानवीय करुणा की दिव्या चमक": "https://www.learncbse.in/ncert-solutions-for-class-10-kshitiz-ii-hindi-chapter-13/"},
-        {"एक कहानी यह भी": "https://www.learncbse.in/ncert-solutions-for-class-10-kshitiz-ii-hindi-chapter-14/"},
-        {"स्त्री शिक्षा के विरोधी कुतर्कों का खंडन": "https://www.learncbse.in/ncert-solutions-for-class-10-kshitiz-ii-hindi-chapter-15/"},
-        {"नौबतखाने में इबादत": "https://www.learncbse.in/ncert-solutions-for-class-10-kshitiz-ii-hindi-chapter-16/"},
-        {"संस्कृति": "https://www.learncbse.in/ncert-solutions-for-class-10-kshitiz-ii-hindi-chapter-17/"},
-    ],
-    "Hindi कृतिका": [
+    "हिंदी कृतिका": [
         {"माता का आँचल": "https://www.learncbse.in/ncert-solutions-for-class-10-kritika-ii-hindi-chapter-1/"},
         {"जॉर्ज पंचम की नाक": "https://www.learncbse.in/ncert-solutions-for-class-10-kritika-ii-hindi-chapter-2/"},
         {"साना-साना हाथ जोड़ि": "https://www.learncbse.in/ncert-solutions-for-class-10-kritika-ii-hindi-chapter-3/"},
@@ -221,8 +202,9 @@ async def get_qna_learncbse(links_list: dict):
                         for element in content_div:
                             if element.text == "\n":
                                 pass
-                            if "More Resources for CBSE Class 10" in element.text:
+                            if "More Resources" in element.text:
                                 break
+                            
                             if element.name == "ol":
                                 current = 1
                                 for li in element.children:
@@ -239,6 +221,10 @@ async def get_qna_learncbse(links_list: dict):
                                         new_content_div.append("• " + li.text)
                             
                             else:
+                                if "You can also download" in element.text:
+                                    continue
+                                if not element.text.startswith("प्रश्न") and "प्रश्न" in element.text:
+                                    continue 
                                 new_content_div.append(element.text)
                         # print(new_content_div)
                         # qna_headings_indexes = []
@@ -256,6 +242,9 @@ async def get_qna_learncbse(links_list: dict):
                         answers_index = []
                         new_all = []
                         all = new_content_div
+                        all = [x.strip() for x in new_content_div if (x != "")]
+                        all = [x.strip() for x in new_content_div if (x != "\n")]
+                        print(all)
                         # for category in new_content_div:
                         #     for question_type, question_list in category.items():
                         #         formatted_data.setdefault(question_type, [])
@@ -264,26 +253,35 @@ async def get_qna_learncbse(links_list: dict):
                         
                         # for string in new_all:
                         #     all.extend(string.split("\n"))
-                        new_content_div_ = []
+                        
+                        new_content_div__ = []
                         for item in new_content_div:
                             parts = item.split('\n')
                             for part in parts:
-                                split_parts = part.split('उत्तर-')
-                                for i, split_part in enumerate(split_parts):
-                                    stripped_part = split_part.strip()
-                                    if stripped_part:
-                                        if i == 0:
-                                            new_content_div_.append(f"{stripped_part}")
-                                        if i == 1:
-                                            new_content_div_.append(f"उत्तर- {stripped_part}")
-                                
-                        all = [x.strip() for x in new_content_div_ if (x != "")]
-                        all = [x.strip() for x in new_content_div_ if (x != "\n")]
-                        print(all)
+                                new_content_div__.append(part)
+                                # split_parts = part.split('उत्तर-')
+                                # # print("--------")
+
+                                # for i, split_part in enumerate(split_parts):
+                                #     stripped_part = split_part.strip()
+                                    
+                                #     if stripped_part:
+                                #         if i == 0:
+                                #             new_content_div__.append(f"{stripped_part}")
+                                #         if i == 1:
+                                #             new_content_div__.append(f"उत्तर- {stripped_part}")
                         
+                             
+                        all = new_content_div__
+                        # print(all)
+                        all = [x.strip() for x in all if (x != "")]
+                        all = [x.strip() for x in all if (x != "\n")]
+                        # print(all)
                         results = []
                         question_indexes = [index for index, item in enumerate(all) if item.startswith('प्रश्न')]
-                        answer_indexes = [index + 2 for index in question_indexes]
+                        # answer_indexes = [index + 2 for index in question_indexes]
+                        answer_indexes = [index for index, item in enumerate(all) if item.startswith('उत्तर')]
+
                         print(question_indexes)
                         print(answer_indexes)
                         
@@ -291,11 +289,11 @@ async def get_qna_learncbse(links_list: dict):
                             
                             if question_index == question_indexes[i]:
                                 try:
-                                    question_text = '\n'.join(all[question_indexes[i+1]:answer_indexes[i]])
+                                    question_text = '\n'.join(all[question_indexes[i]:answer_indexes[i]][1:])
                                     if i + 1 < len(question_indexes):
-                                        answer_text = '\n'.join(all[answer_indexes[i]+1:question_indexes[i+1]])
+                                        answer_text = '\n'.join(all[answer_indexes[i]:question_indexes[i+1]]).replace("उत्तर\n", "").replace("उत्तर-\n", "")
                                     else:
-                                        answer_text = '\n'.join(all[answer_indexes[i]+1:])
+                                        answer_text = '\n'.join(all[answer_indexes[i]:]).replace("उत्तर\n", "").replace("उत्तर-\n", "")
                                     # answer_text = ' '.join(all[answer_indexes[i] + 1:question_indexes[i+1]])
                                     results.append({'question_text': question_text, 'answer_text': answer_text})
                                 except Exception as e:
@@ -316,11 +314,11 @@ async def get_qna_learncbse(links_list: dict):
                             # Check for the last question
                             if question_index == question_indexes[-1]:
                                 question_text = '\n'.join(all[question_indexes[-1] + 1:answer_indexes[-1]])
-                                answer_text = '\n'.join(all[answer_indexes[-1] + 1:])
+                                answer_text = '\n'.join(all[answer_indexes[-1]:]).replace("उत्तर\n", "").replace("उत्तर-\n", "")
                                 results.append({'question_text': question_text, 'answer_text': answer_text})
 
-                        # print(results)
-                        # await add_to_database(subject=subject, chapter=title, data=results)
+                        print(results)
+                        await add_to_database(subject=subject, chapter=title, data=results)
                         # return results
 
                         
@@ -392,10 +390,7 @@ if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     # loop.run_until_complete(get_qna_learncbse({'Science': [{'Management of Natural Resources':\
     #     'https://www.learncbse.in/management-natural-resources-chapter-wise-important-questions-class-10-science/'}]}))
-    loop.run_until_complete(get_qna_learncbse({
-    "Hindi क्षितिज": [
-        {"पद": "https://www.learncbse.in/ncert-solutions-for-class-10-kshitiz-ii-hindi-chapter-1/"},
-    ]
-}))
+    # loop.run_until_complete(get_qna_learncbse(hindi_links_list))
+    loop.run_until_complete(get_qna_learncbse(hindi_links_list))
     # loop.run_until_complete(get_qna_learncbse({'Maths': [{'Real Numbers': 'https://www.learncbse.in/important-questions-for-class-10-maths-chapter-1/'}]}))
     # loop.run_until_complete(get_maths_links())
