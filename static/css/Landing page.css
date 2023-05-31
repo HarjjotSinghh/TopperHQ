@@ -124,8 +124,7 @@ td.book{
 	filter: drop-shadow(4px 4px 4px rgb(129, 129, 129));
   }
   
-  /* The overlay effect (full height and width) - lays on top of the container and over the image */
-  .overlay {
+.overlay {
 	position: absolute;
 	bottom: 0;
 	left: 0;
@@ -139,13 +138,11 @@ td.book{
 	border-radius: 20PX;
   }
   
-  /* When you mouse over the container, the overlay text will "zoom" in display */
   .container:hover .overlay {
 	transform: scale(1);
   }
   
-  /* Some text inside the overlay, which is positioned in the middle vertically and horizontally */
-  .text {
+.text {
 	color: white;
 	font-size: 20px;
 	position: absolute;
@@ -153,4 +150,13 @@ td.book{
 	left: 50%;
 	transform: translate(-50%, -50%);
 	text-align: center;
+  }
+
+p.overlay{
+	color: rgb(0, 0, 0);
+	font-size: 20px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: left;
   }
