@@ -1,0 +1,64 @@
+
+img.main{
+	filter: brightness(120%);
+   	filter: contrast(100%);
+   	filter: drop-shadow(10px 10px 10px rgb(59, 59, 59));
+	border-radius: 20px;
+}
+
+img.class10{
+	filter: brightness(80%);
+	filter: contrast(50%);
+	filter: drop-shadow(2px 2px 2px rgb(59, 59, 59));
+	transition: transform .2s;
+ 	border-radius: 20px;
+}
+
+img:hover.class10{
+	transform:scale(1.08);
+	}
+
+img.class12{
+	filter: brightness(80%);
+	filter: contrast(50%);
+	filter: drop-shadow(2px 2px 2px rgb(59, 59, 59));
+	transition: transform .2s;
+	border-radius: 20px;
+}
+
+img:hover.class12{
+	transform:scale(1.08);
+}
+img.logo{
+	padding-left: 60px;
+}
+td.class{
+	padding-left: 30px;
+	padding-right: 30px;
+	position:inherit;
+}
+
+td.link{
+	padding-left: 180px;
+	font-style: normal;
+}
+
+table.links{
+	padding-left: 40px;
+}
+
+td:hover.link{
+	transform:scale(1.02);
+}
+
+td{
+	padding-bottom:30px;
+}
+
+img.sub{
+	filter: brightness(80%);
+	filter: contrast(50%);
+	filter: drop-shadow(2px 2px 2px rgb(59, 59, 59));
+	transition: transform .2s;
+ 	border-radius: 20px;
+}
