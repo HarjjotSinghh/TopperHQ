@@ -8,12 +8,12 @@
   <body style="background-color: white;"> 
 
       <div class="links">
-        <a href="Landing page.html">
+        <a href="http://127.0.0.1:5000/">
           <img src="{{url_for('static', filename='img/Home-removebg-preview.png')}}" height="30" width="25">
         </a>
         <a href="http://127.0.0.1:5000/books">
           <img src="{{url_for('static', filename='img/book-removebg-preview.png')}}" height="40" width="25">
-          <a href="Notes.html">
+          <a href="http://127.0.0.1:5000/important_questions">
             <img src="{{url_for('static', filename='img/Notes-removebg-preview.png')}}" height="30" width="23">
           </a>
           <a href="http://127.0.0.1:5000/class10">
@@ -27,15 +27,27 @@
 
 
     <div class="main-container">
-      <img class="main" src="{{url_for('static', filename='img/Main.png')}}" height="550" width="1200" draggable="false">
-      <!-- <h1 class="heading">
-        Welcome To<br>TopperHQ!
-      </h1>
-      <p class="follow-up-text">
+      <!-- <img class="main" src="{{url_for('static', filename='img/Main.png')}}" height="550" width="1200" draggable="false"> -->
+      <div class="hero-container">
+        <h1 class="heading text">
+          <span class="smaller-text">
+            Welcome To
+          </span><br>TopperHQ!
+        </h1>
+        <p class="follow-up-text text">
+          The ultimate destination for <strong>simplified</strong> important questions and answers for all subjects of Class 10th and 12th! 
+        </p>
+      </div>
 
-      </p> -->
+      <a href="http://127.0.0.1:5000/class10">
+        <button>Class 10th Important Questions and Answers</button>
+      </a>
+      <a href="http://127.0.0.1:5000/important_questions">
+        <button>Class 10th Important Questions Only</button>
+      </a>
+      <a href="http://127.0.0.1:5000/books">
+        <button>Class 10th NCERT Books PDFs</button>
+      </a>
     </div>
-
-    <br><br>
     </body>
 <html>

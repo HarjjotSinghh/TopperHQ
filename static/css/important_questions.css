@@ -34,7 +34,14 @@ html {
     font-weight: bolder;
     font-size: 2.5rem;
     color: black;
-    padding-left: 40px;
+	padding-bottom: 5px;
+	padding-top: 30px;
+
+}
+.para-text {
+	padding-bottom: 10px;
+	padding-top: 0px;
+	text-align: justify;
 }
 
 .text {
@@ -42,11 +49,45 @@ html {
     user-select: none;
     -webkit-user-select: none;
     text-align: left !important;
+	padding-left: 40px;
+	padding-right: 40px;
+	margin: 0 !important;
 }
 .main-container {
     display: flex;
     width: 100vw;
+	height: 100vh;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
+.box {
+	background: linear-gradient(5deg, #fff3fc, #e9f6fe);
+	border-radius: 50px;
+	width: 800px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+button{
+	padding: 20px 35px;
+	background: #050801;
+    font-family: 'Roboto Slab', serif;
+	color: white;
+	/* font-weight: 900; */
+	border: none;
+	border-radius: 25px;
+	letter-spacing:1px;
+	overflow: hidden;
+	transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+	cursor: pointer;
+	font-size: 1.15rem;
+	box-shadow: 0 0 25px #000000,
+
+}
+.button-container {
+	padding-bottom: 30px;
+}
+  

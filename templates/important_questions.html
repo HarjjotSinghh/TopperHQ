@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Class 10th Important Questions</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/important_questions.css')}}">
 </head>
 <body>
     <header>
@@ -14,7 +15,7 @@
             </a>
             <a href="http://127.0.0.1:5000/books">
               <img src="{{url_for('static', filename='img/book-removebg-preview.png')}}" height="40" width="25">
-              <a href="Notes.html">
+              <a href="http://127.0.0.1:5000/important_questions">
                 <img src="{{url_for('static', filename='img/Notes-removebg-preview.png')}}" height="30" width="23">
               </a>
               <a href="http://127.0.0.1:5000/class10">
@@ -28,10 +29,19 @@
     </header>
 
     <div class="main-container">
-        <h1 class="heading-text">
-            Class 10th CBSE Important Questions
+      <div class="box">
+        <h1 class="heading-text text">
+          Class 10th CBSE Important Questions
         </h1>
-        
+        <p class="para-text text">
+          This is a valuable PDF resource that offers a wide range of carefully selected questions across all subjects of the CBSE curriculum. With its user-friendly layout and diverse question types, this comprehensive compilation serves as an indispensable tool for students preparing for exams, enabling them to reinforce their knowledge, practice problem-solving skills, and excel academically in Class 10th.
+        </p>
+        <div class="button-container">
+          <a href="{{url_for('static', filename='/files/IMPORTANT QUESTIONS.pdf')}}" download>
+            <button>Download PDF</button>
+          </a>
+        </div>
+      </div>        
     </div>
     
 </body>

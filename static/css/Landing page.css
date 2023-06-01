@@ -142,16 +142,8 @@ td.book{
   .container:hover .overlay {
 	transform: scale(1);
   }
-  
-.text {
-	color: white;
-	font-size: 20px;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	text-align: center;
-  }
+
+
 
 p.overlay{
 	color: rgb(0, 0, 0);
@@ -186,11 +178,12 @@ p.overlay{
 }
 
 .main-container {
-	height: 100vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	
+	flex-direction: column;
+	gap: 50px;
+	margin-top: 145px;
 }
 .main-container img {
 	width: 60%;
@@ -198,16 +191,91 @@ p.overlay{
 }
 body {
 	margin: 0;
-	overflow: hidden;
+	overflow-x: hidden;
 }
 html {
 	scroll-behavior: smooth;
 }
 
-/* .heading{
-	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-	font-size: 4rem;
+
+.heading{
+    font-family: 'Roboto Slab', serif;
+
+	font-size: 5rem;
 	font-weight: 900;
 	color: black;
+	line-height: 60px;
 	text-align: center;
-} */
+	margin: 0 !important;
+	/* margin-top: -15px !important; */
+	font-weight: 900;
+	user-select: none;
+	-webkit-user-drag: none;
+
+}
+
+.hero-container {
+	background: linear-gradient(-90deg, #fff3fc, #e9f6fe);
+	width: 650px;
+	height: 300px;
+	border-radius: 60px;
+	overflow: hidden !important;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+	box-shadow: 0px 0px 30px rgb(255, 244, 253);
+
+}
+
+.hero-container:hover{
+	transform: scale(1.05);
+}
+.smaller-text {
+	font-weight: 100;
+	font-size:3rem;
+	
+}
+.follow-up-text {
+	font-size: 1.2rem;
+    font-family: 'Roboto Slab', serif;
+	padding-left: 50px;
+	padding-right: 50px;
+	padding-top: 30px;
+	text-align: center;
+	margin: none !important;
+	user-select: none;
+	-webkit-user-drag: none;
+}
+.buttons-container {
+	display: flex;
+	width: 100vw;
+	height: 100vh;
+	justify-content: center;
+	align-items: center;
+}
+button{
+	padding: 30px 45px;
+	background: #050801;
+    font-family: 'Roboto Slab', serif;
+	color: white;
+	/* font-weight: 900; */
+	border: none;
+	border-radius: 25px;
+	letter-spacing:1px;
+	overflow: hidden;
+	transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+	cursor: pointer;
+	font-size: 1.15rem;
+	box-shadow: 0 0 25px #000000,
+
+}
+  
+button:hover{
+	transform: scale(1.05);
+	background: #fff3fc;
+	color: #050801;
+	box-shadow: 0 0 50px #ffe9fa;
+	/* -webkit-box-reflect:below 1px linear-gradient(transparent, #0005); */
+}
