@@ -92,8 +92,6 @@ def convert_to_dicts(elements, indexes):
             last_dict = {elements[indexes[-1]]: last_range}
             result.append(last_dict)
 
-
-
     return remove_duplicate_dicts(result)
 
 
@@ -102,15 +100,15 @@ def filter_similar_strings(data):
     seen = set()
 
     for item in data:
-        key = item.split(" ")[0]  # Extract the key (e.g., "question")
+        key = item.split(" ")[0]
         if key in seen:
-            continue  # Skip if we've already processed a similar key
+            continue
         similar_items = [x for x in data if x.startswith(key)]
-        if len(similar_items) > 1:  # Check if there are similar strings
-            longest_item = max(similar_items, key=len)  # Find the longest string
+        if len(similar_items) > 1:
+            longest_item = max(similar_items, key=len)
             result.append(longest_item)
         else:
-            result.append(item)  # Keep the string as it is if no similar strings found
+            result.append(item)
         seen.add(key)
 
     return result
@@ -138,15 +136,12 @@ async def get_qna_studypath(links_list: dict):
         for obj in links_list_:
             for title, link in obj.items():
                 await asyncio.sleep(1)
-                
                 async with aiohttp.ClientSession() as session:
                     async with session.get(link) as response:
                         soup = BeautifulSoup(await response.text(), 'html.parser')
                         content_div = soup.find("div", class_="entry-content")
-                        # content_div = list(content_div.children)
                         headings = content_div.find_all("h3")
                         content_div = content_div.find_all(["h3", "p"])[1:]
-                        # print(content_div)
                         new_content_div = []
                         formatted_data = {}
                         for element in content_div:
@@ -183,10 +178,6 @@ async def get_qna_studypath(links_list: dict):
                                 continue
                             else:
                                 new_content_div_.append(item)
-                        # new_content_div__ = []
-                        # for item in new_content_div_:
-                        #     for x in item.split("Answer"):
-                        #         new_content_div__.append(x.strip())
 
                         new_content_div__ = []
                         
@@ -202,35 +193,10 @@ async def get_qna_studypath(links_list: dict):
                                         else:
                                             new_content_div__.append(f"Answer: {stripped_part}")
                         
-                        # print(new_content_div__)
-                                
-                        # qna_headings_indexes = []
-                        # for element in new_content_div:
-                        #     for type in types:
-                        #         if type in element:
-                        #             qna_headings_indexes.append(new_content_div.index(element))
-                            
-
-                        # sub_lists = convert_to_dicts(list(new_content_div), qna_headings_indexes)
-
-                        # questions = []
-                        # questions_index = []
-                        # answers = []
-                        # answers_index = []
-                        # new_all = new_content_div
-                        # all = []
-                        # for category in sub_lists:
-                        #     for question_type, question_list in category.items():
-                        #         formatted_data.setdefault(question_type, [])
-                        #         sum_list = sum((string.split("\n") for string in question_list), [])
-                        #         all.extend(sum_list)
-
                         all = [x.strip() for x in new_content_div__ if (x != "")]
                         all = [x.strip() for x in new_content_div__ if (x!= "\n")]
 
-                        
                         results = []
-                        # question_indexes = [index for index, item in enumerate(all) if re.match(r"^\d+\..+", item)]
                         question_indexes = [index for index, item in enumerate(all) if item.lower().startswith("question")]
                         answer_indexes = [index for index, item in enumerate(all) if item.lower().startswith('answer')]
                         print(question_indexes)
@@ -240,22 +206,14 @@ async def get_qna_studypath(links_list: dict):
                             
                             if question_index == question_indexes[i] and question_index != question_indexes[-1]:
                                 try:
-
-
                                     question_text = re.sub(decimal_starting_pattern, '', '\n'.join(all[question_indexes[i]:answer_indexes[i]])).strip() if re.sub(decimal_starting_pattern, '', '\n'.join(all[question_indexes[i]:answer_indexes[i]])) != "" else re.sub(decimal_starting_pattern, '', all[question_indexes[i]]).strip()
                                     if i + 1 < len(question_indexes):
-                                        answer_text = '\n'.join(all[answer_indexes[i-1]:question_indexes[i]]).replace("Answer:", "").strip()
+                                        answer_text = '\n'.join(all[answer_indexes[i-2]:question_indexes[i]]).replace("Answer:", "").strip()
                                     else:
-                                        answer_text = '\n'.join(all[answer_indexes[i-1]:]).replace("Answer:", "").strip()
-                                    # answer_text = ' '.join(all[answer_indexes[i] + 1:question_indexes[i+1]])
+                                        answer_text = '\n'.join(all[answer_indexes[i-2]:]).replace("Answer:", "").strip()
                                     results.append({'question_text': question_text, 'answer_text': answer_text})
                                 except Exception as e:
                                     continue
-                            
-                            # if question_index == question_indexes[0]:
-                            #     question_text = '\n'.join(all[question_indexes[0] :answer_indexes[0]])
-                            #     answer_text = '\n'.join(all[answer_indexes[0]: question_indexes[1]]).replace("Answer:", "").strip()
-                            #     results.append({'question_text': question_text, 'answer_text': answer_text})
                             
                             if question_index == question_indexes[-1]:
                                 question_text = re.sub(decimal_starting_pattern, '','\n'.join(all[question_indexes[-1] :answer_indexes[-1]])).strip()
@@ -263,18 +221,9 @@ async def get_qna_studypath(links_list: dict):
                                 results.append({'question_text': question_text, 'answer_text': answer_text})
 
                         print(results)
-                        await add_to_database(subject=subject, chapter=title, data=results)
-                        # print(split_data(new_content_div_))
+                        # await add_to_database(subject=subject, chapter=title, data=results)
 
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
-    # loop.run_until_complete(get_qna_studypath({'Science': [{'Management of Natural Resources':\
-    #     'https://www.learncbse.in/management-natural-resources-chapter-wise-important-questions-class-10-science/'}]}))
-    loop.run_until_complete(get_qna_studypath({'English First Flight Poems': [{'The Trees': 'https://www.thestudypath.com/class-10/extra-questions/english/first-flight/poem-8-the-trees/'}, {'The Tale of Custard the Dragon': 'https://www.thestudypath.com/class-10/extra-questions/english/first-flight/poem-10-the-tale-of-custard-the-dragon/'}, {'For Anne Gregory': 'https://www.thestudypath.com/class-10/extra-questions/english/first-flight/poem-11-for-anne-gregory/'}, {"Animals": "https://www.thestudypath.com/class-10/extra-questions/english/first-flight/poem-7-animals/"}]}))
-    # loop.run_until_complete(get_qna_studypath({'English First Flight Poems': [{'The Trees': 'https://www.thestudypath.com/class-10/extra-questions/english/first-flight/poem-8-the-trees/'}]}))
-    # loop.run_until_complete(get_qna_studypath(
-    #     {'English First Flight Prose': [{'Two Stories about Flying': 'https://www.thestudypath.com/class-10/extra-questions/english/first-flight/chapter-3-two-stories-about-flying/'}]}
-    # ))
-
-    # loop.run_until_complete(get_english_links())
+    loop.run_until_complete(get_qna_studypath({'English First Flight Poems': [{'The Trees': 'https://www.thestudypath.com/class-10/extra-questions/english/first-flight/poem-8-the-trees/'}]}))

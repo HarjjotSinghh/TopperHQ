@@ -5,24 +5,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TopperHQ™ - Class 10</title>
-    <link rel="stylesheet" type="text/css" href="C:\Users\hp\Documents\TopperHQ\static\css\class10.css">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/class10.css')}}">
 
 </head>
 <body>
     <header>
-        <br>
-        <table class="links">
-          <tr><td class="link"><a href="Landing page.html"><img src="Home.png" height="27" width="30"></a></td><td class="link"><a href="Books.html"><img src="book-removebg-preview.png" height="40" width="25"></td><td class="link"><a href="Notes.html"><img src="Notes-removebg-preview.png" height="30" width="23"></a></td><td class="link"><a href=""><img src="Class 10 logo.png" height="30" width="29"></a></td><td class="link"><a href=""><img src="Class 12 logo.png" height="30" width="29"></a></td>
-          </tr>
-          </table> 
-        </header>
+      <div class="links">
+        <a href="Landing page.html">
+          <img src="{{url_for('static', filename='img/Home-removebg-preview.png')}}" height="30" width="25">
+        </a>
+        <a href="http://127.0.0.1:5000/books">
+          <img src="{{url_for('static', filename='img/book-removebg-preview.png')}}" height="40" width="25">
+          <a href="Notes.html">
+            <img src="{{url_for('static', filename='img/Notes-removebg-preview.png')}}" height="30" width="23">
+          </a>
+          <a href="class10.html">
+            <img src="{{url_for('static', filename='img/Class 10 logo.png')}}" height="30" width="29">
+          </a>
+          <a href="">
+            <img src="{{url_for('static', filename='img/Class 12 logo.png')}}" height="30" width="29" style="cursor:not-allowed">
+          </a>
+          
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
       <br>
       <table class="subjects" align="center">
-        <tr class="subject"><td><a href="English.html"><img class="sub" src="English.jpeg"></a></td></tr>
-        <tr class="subject"><td><img class="sub" src="maths.jpeg"></td></tr>
-        <tr class="subject"><td><img class="sub" src="science.jpeg"></td></tr>
-        <tr class="subject"><td><img class="sub" src="sst.jpeg"></td></tr>
-        <tr class="subject"><td><img class="sub" src="Hindi 1.png"></td></tr>
-      </table>   
+        <tr class="subject"><td><a href="http://127.0.0.1:5000/english">
+          <img class="sub" src="{{url_for('static', filename='img/English.jpeg')}}"></a></td></tr>
+        <tr class="subject"><td><img class="sub" src="{{url_for('static', filename='img/maths.jpeg')}}"></td></tr>
+        <tr class="subject"><td><img class="sub" src="{{url_for('static', filename='img/science.jpeg')}}"></td></tr>
+        <tr class="subject"><td>
+          <a href="http://127.0.0.1:5000/sst">
+            <img class="sub" src="{{url_for('static', filename='img/sst.jpeg')}}">
+          </a>
+        </td></tr>
+        <tr class="subject"><td><img class="sub" src="{{url_for('static', filename='img/Hindi 1.png')}}"></td></tr>
+      </table>
 </body>
 </html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TopperHQ™ - English (10)</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/subjects.css')}}">
+
+</head>
+<body>
+    <header>
+        <div class="links">
+            <a href="Landing page.html">
+              <img src="{{url_for('static', filename='img/Home-removebg-preview.png')}}" height="30" width="25">
+            </a>
+            <a href="http://127.0.0.1:5000/books">
+              <img src="{{url_for('static', filename='img/book-removebg-preview.png')}}" height="40" width="25">
+              <a href="Notes.html">
+                <img src="{{url_for('static', filename='img/Notes-removebg-preview.png')}}" height="30" width="23">
+              </a>
+              <a href="http://127.0.0.1:5000/class10">
+                <img src="{{url_for('static', filename='img/Class 10 logo.png')}}" height="30" width="29">
+              </a>
+              <a href="">
+                <img src="{{url_for('static', filename='img/Class 12 logo.png')}}" height="30" width="29" style="cursor:not-allowed">
+              </a>
+    
+          </div> 
+        </header>
+        <div class="content text">
+            <h1 class="subject-heading">
+                {{subject | title}} Important Question Answers
+            </h1>
+            <div class="chapters">
+                <h2 class="sub-heading">
+                    Economics
+                </h2>
+                <ul>
+                    {% for heading in eco_chapter_names %}
+                        <a href="http://127.0.0.1:5000/qna/{{heading | encode_name}}">
+                            <li class="chapter-heading">{{heading}}</li>
+                        </a>
+                    {% endfor %}
+                </ul>
+                <h2 class="sub-heading">
+                    Geography
+                </h2>
+                <ul>
+                    {% for heading in geo_chapter_names %}
+                        <a href="http://127.0.0.1:5000/qna/{{heading | encode_name}}">
+                            <li class="chapter-heading">{{heading}}</li>
+                        </a>
+                    {% endfor %}
+                </ul>
+                <h2 class="sub-heading">
+                    History
+                </h2>
+                <ul>
+                    {% for heading in history_chapter_names %}
+                        <a href="http://127.0.0.1:5000/qna/{{heading | encode_name}}">
+                            <li class="chapter-heading">{{heading}}</li>
+                        </a>
+                    {% endfor %}
+                </ul>
+                <h2 class="sub-heading">
+                    Political Science
+                </h2>
+                <ul>
+                    {% for heading in pol_science_chapter_names %}
+                        <a href="http://127.0.0.1:5000/qna/{{heading | encode_name}}">
+                            <li class="chapter-heading">{{heading}}</li>
+                        </a>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        

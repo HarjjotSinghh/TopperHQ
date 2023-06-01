@@ -24,11 +24,11 @@ li a:hover{
 	color:rgb(224, 197, 171);
 }
 
-img.main{
+.main{
 	filter: brightness(120%);
    	filter: contrast(100%);
-   	filter: drop-shadow(10px 10px 10px rgb(59, 59, 59));
-	border-radius: 20px;
+   	filter: drop-shadow(10px 10px 15px rgba(59, 59, 59, 0.2));
+	border-radius: 30px;
 }
 
 img.class10{
@@ -160,3 +160,45 @@ p.overlay{
 	transform: translate(-50%, -50%);
 	text-align: left;
   }
+
+.links {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background: linear-gradient(5deg, #fff3fc, #e9f6fe);
+	z-index: 99;
+	width: 100vw;
+	box-shadow: 0px 0px 30px rgb(255, 246, 253);
+}
+.links img {
+	-webkit-user-drag: none;
+	transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.links img:hover {
+	transform: scale(1.2);
+	/* rotate: -1deg; */
+}
+
+.main-container {
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	
+}
+.main-container img {
+	width: 60%;
+	height: auto;
+}
+body {
+	margin: 0;
+	overflow: hidden;
+}
+html {
+	scroll-behavior: smooth;
+}

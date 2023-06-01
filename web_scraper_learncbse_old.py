@@ -85,17 +85,14 @@ async def get_qna_learncbse(links_list: dict):
                                     question_lists[element.text] = []
 
                                 if current_type is not None:
-                                    # print(element)
                                     if not element.text.strip().lower().startswith("question") or not element.text.strip().lower().startswith("answer"):
                                         answer_text += "\n" + element.text.strip()
                                     
                                     if element.find("br") is not None:
                                         
-                                        # element has br, it is a qna
                                         items = element.get_text(separator="<br>").split("<br>")
                                         for item in items:
                                             if item.strip().lower().startswith("question"):
-                                                # it is a question
                                                 question_index = items.index(item)
                                                 for item in items:
                                                     if item.strip().lower().startswith("answer"):
@@ -118,7 +115,6 @@ async def get_qna_learncbse(links_list: dict):
                                                 pass
                                         pass
                                     
-                                    # if element.find("br") is None:
                                     
                                 if current_type is not None and element.name == "ol":
                                     current = 1
@@ -132,17 +128,6 @@ async def get_qna_learncbse(links_list: dict):
                                     
                             print("question text: \n" + question_text, "answer text: \n" + answer_text)
                     
-                        
-                
-                
-                
-# async def add_to_database(chapters_urls: dict):
-#     for k, v in chapters_urls.items():
-#         data = await get_questions_answers_learncbse(url=v)
-#         result = await db["Maths"].insert_one({k: data})
-    
-#     print(f"Successfully inserted {len(chapters_urls)} documents.")
-    
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()

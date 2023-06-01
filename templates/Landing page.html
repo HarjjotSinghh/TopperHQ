@@ -4,21 +4,32 @@
     <meta charset="utf-8">
     <title>TopperHQ™</title>
   </head>
-  <link rel="stylesheet" href="C:\Users\hp\Documents\TopperHQ\static\css\landing page.css">
-  <body background="Background.png"> 
-    <header>
-      <br>
-      <table class="links">
-        <tr><td class="link"><a href="Landing page.html"><img src="Home-removebg-preview.png" height="30" width="25"></a></td><td class="link"><a href="Books.html"><img src="book-removebg-preview.png" height="40" width="25"></td><td class="link"><a href="Notes.html"><img src="Notes-removebg-preview.png" height="30" width="23"></a></td><td class="link"><a href="class10.html"><img src="Class 10 logo.png" height="30" width="29"></a></td><td class="link"><a href=""><img src="Class 12 logo.png" height="30" width="29"></a></td>
-        </tr>
-        </table> 
-      </header>
-    <br>
-    <center>
-    <section>
-      <img class="main" src="Main.png" height="550" width="1200">
-    </section>
-    </center>
+  <link rel="stylesheet" href="{{url_for('static', filename='css/Landing Page.css')}}">
+  <body style="background-color: white;"> 
+
+      <div class="links">
+        <a href="Landing page.html">
+          <img src="{{url_for('static', filename='img/Home-removebg-preview.png')}}" height="30" width="25">
+        </a>
+        <a href="http://127.0.0.1:5000/books">
+          <img src="{{url_for('static', filename='img/book-removebg-preview.png')}}" height="40" width="25">
+          <a href="Notes.html">
+            <img src="{{url_for('static', filename='img/Notes-removebg-preview.png')}}" height="30" width="23">
+          </a>
+          <a href="http://127.0.0.1:5000/class10">
+            <img src="{{url_for('static', filename='img/Class 10 logo.png')}}" height="30" width="29">
+          </a>
+          <a href="">
+            <img src="{{url_for('static', filename='img/Class 12 logo.png')}}" height="30" width="29" style="cursor:not-allowed">
+          </a>
+
+      </div> 
+
+
+    <div class="main-container">
+      <img class="main" src="{{url_for('static', filename='img/Main.png')}}" height="550" width="1200" draggable="false">
+    </div>
+
     <br><br>
     </body>
 <html>

@@ -39,9 +39,7 @@ async def get_questions_answers_vedantu(url: str):
             current_type = None
             for child in footer_section.contents[0].find_all(["p", "h2", "h3"]):
                 child_text = re.sub(r'\s+|&nbsp;', ' ', child.text.strip())
-                # if "important questions" in child.text.lower()  or "ncert solutions" in child.text.lower() or "download free pdf" in child.text.lower() or "conclusion" in child.text.lower():
                 if "CBSE Class 10 Maths Probability Important Questions" in child.text:
-                # if "Important Questions and Solutions Summary" in child.text or "Chapter 11 Science Class 10 Important Questions" in child.text:
                     break
                 if child_text is not None and child_text in types:
                     current_type = child_text
@@ -78,7 +76,7 @@ async def get_questions_answers_vedantu(url: str):
                         
                     elif question.startswith("Ans:"):
                         answer_index = questions.index(question)
-                        if ans_text:  # If ans_text already contains content, include it in the question_text
+                        if ans_text:
                             ans_text += " " + ans_text
                         ans_text = re.sub(r'^Ans:\s*', '', question)
                         

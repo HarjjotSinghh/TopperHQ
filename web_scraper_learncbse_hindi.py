@@ -183,7 +183,7 @@ async def add_to_database(subject: str, chapter: str, data: list):
     await db[subject].insert_one({chapter: data})
     print(f"Successfully inserted {chapter} ({subject}).")
 
-# THIS TOOK ME FUCKING 12 HOURS TO FIGURE OUT 😭
+
 async def get_qna_learncbse(links_list: dict):
     for subject, links_list_ in links_list.items():
         for obj in links_list_:
@@ -194,9 +194,7 @@ async def get_qna_learncbse(links_list: dict):
                     async with session.get(link) as response:
                         soup = BeautifulSoup(await response.text(), 'html.parser')
                         content_div = soup.find("div", class_="entry-content")
-                        # print(content_div)
-                        
-                        # print(qna_headings_indexes)
+
                         new_content_div = []
                         formatted_data = {}
                         for element in content_div:
@@ -224,18 +222,9 @@ async def get_qna_learncbse(links_list: dict):
                                 if "You can also download" in element.text:
                                     continue
                                 if not element.text.startswith("प्रश्न") and "प्रश्न" in element.text:
-                                    continue 
+                                    continue
                                 new_content_div.append(element.text)
-                        # print(new_content_div)
-                        # qna_headings_indexes = []
-                        # for element in new_content_div:
-                        #     for type in types:
-                        #         if type in element:
-                        #             qna_headings_indexes.append(new_content_div.index(element))
-                            
-                        # print(new_content_div)
-                        # sub_lists = convert_to_dicts(list(new_content_div), qna_headings_indexes)
-                        # print(sub_lists)
+                                
                         questions = []
                         questions_index = []
                         answers = []
@@ -245,41 +234,20 @@ async def get_qna_learncbse(links_list: dict):
                         all = [x.strip() for x in new_content_div if (x != "")]
                         all = [x.strip() for x in new_content_div if (x != "\n")]
                         print(all)
-                        # for category in new_content_div:
-                        #     for question_type, question_list in category.items():
-                        #         formatted_data.setdefault(question_type, [])
-                        #         sum_list = sum((string.split("\n") for string in question_list), [])
-                        #         all.extend(sum_list)
-                        
-                        # for string in new_all:
-                        #     all.extend(string.split("\n"))
                         
                         new_content_div__ = []
                         for item in new_content_div:
                             parts = item.split('\n')
                             for part in parts:
                                 new_content_div__.append(part)
-                                # split_parts = part.split('उत्तर-')
-                                # # print("--------")
-
-                                # for i, split_part in enumerate(split_parts):
-                                #     stripped_part = split_part.strip()
-                                    
-                                #     if stripped_part:
-                                #         if i == 0:
-                                #             new_content_div__.append(f"{stripped_part}")
-                                #         if i == 1:
-                                #             new_content_div__.append(f"उत्तर- {stripped_part}")
-                        
-                             
+                                           
                         all = new_content_div__
-                        # print(all)
+
                         all = [x.strip() for x in all if (x != "")]
                         all = [x.strip() for x in all if (x != "\n")]
-                        # print(all)
+
                         results = []
                         question_indexes = [index for index, item in enumerate(all) if item.startswith('प्रश्न')]
-                        # answer_indexes = [index + 2 for index in question_indexes]
                         answer_indexes = [index for index, item in enumerate(all) if item.startswith('उत्तर')]
 
                         print(question_indexes)
@@ -294,23 +262,10 @@ async def get_qna_learncbse(links_list: dict):
                                         answer_text = '\n'.join(all[answer_indexes[i]:question_indexes[i+1]]).replace("उत्तर\n", "").replace("उत्तर-\n", "")
                                     else:
                                         answer_text = '\n'.join(all[answer_indexes[i]:]).replace("उत्तर\n", "").replace("उत्तर-\n", "")
-                                    # answer_text = ' '.join(all[answer_indexes[i] + 1:question_indexes[i+1]])
+
                                     results.append({'question_text': question_text, 'answer_text': answer_text})
                                 except Exception as e:
                                     continue
-                            
-                            # answer_index = answer_indexes[i]
-                            # question_text = ' '.join(all[question_index + 1:answer_index])
-                            # # print(all[question_index + 1:answer_index], question_index +1, answer_index)
-
-                            # if i + 1 < len(question_indexes):
-                            #     next_question_index = question_indexes[i + 1]
-                            #     answer_text = ' '.join(all[answer_index + 1:question_index])
-                            # else:
-                            #     answer_text = ' '.join(all[answer_index + 1:question_index + 1])
-
-                            # results.append({'question_text': question_text, 'answer_text': answer_text})
-
                             # Check for the last question
                             if question_index == question_indexes[-1]:
                                 question_text = '\n'.join(all[question_indexes[-1] + 1:answer_indexes[-1]])
@@ -319,78 +274,8 @@ async def get_qna_learncbse(links_list: dict):
 
                         print(results)
                         await add_to_database(subject=subject, chapter=title, data=results)
-                        # return results
 
-                        
-                        # for category in sub_lists:
-                        #     for question_type, question_list in category.items():
-                        #         formatted_data.setdefault(question_type, [])
-                        #         for question in question_list:
-                        #             if len(question.split("Answer:")) == 2:
-                        #                 questions_index.append(question_list.index(question))
-                        #                 question_text, answer_text = question.split("Answer:")[0:2]
-                        #                 questions.append(question_text)
-                        
-                        # for category in sub_lists:
-                        #     for question_type, question_list in category.items():
-                        #         formatted_data.setdefault(question_type, [])
-                        #         for question in question_list:
-                        #             if len(question.split("Answer:")) == 2:
-                        #                 print(question_list.index(question))
-                        #                 answers_index.append(question_list.index(question))
-                        #                 question_text, answer_text = question.split("Answer:")[0:2]
-                        #                 answers.append(answer_text)
-                        #             if len(question.split("Answer:")) == 1:
-                        #                 if answer_text and not question in answer_text:
-                        #                     answer_text += "\n" + question
-                        #             if answer_text not in answers:
-                        #                     # print(question_list.index(question) + 1)
-                        #                 if (question_list.index(question) + 1) in questions_index:
-                        #                     print((question_list.index(question) + 1),"\n" + question)
-                        #                     answers.append(answer_text)
-                        # answers = filter_similar_strings(answers)
-                            
-                                # for question in question_list:
-                                #     string_parts = question.split("\n")
-                                #     question_text = ''
-                                #     ans_text = ''
-                                #     question_index = 0
-                                #     ans_index = 0
-                                #     for part in string_parts:
-                                #         if part.lower().startswith('question'):
-                                #             question_index = string_parts.index(part)
-                                #             question_text += part + '\n'
-                                #         for i in range(question_index, len(string_parts)):
-                                #             if string_parts[i].lower().startswith("answer"):
-                                #                 break
-                                #             else: question_text += "\n" + string_parts[i]
-                                #     for part in string_parts:
-                                #         if part.lower().startswith('answer'):
-                                #             ans_index = string_parts.index(part)
-                                #             ans_text += part + '\n'
-                                #         for i in range(ans_index, len(string_parts)):
-                                #             if string_parts[i].lower().startswith("question"):
-                                #                 break
-                                #             else: ans_text += "\n" + string_parts[i]
-
-                                    
-                                #     question_text = question_text.strip()
-                                #     ans_text = ans_text.strip()
-                                    
-                                #     formatted_data[question_type].append({question_text: ans_text})
-
-                        # print(formatted_data)
-                    
-                    
-                
-
-    
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
-    # loop.run_until_complete(get_qna_learncbse({'Science': [{'Management of Natural Resources':\
-    #     'https://www.learncbse.in/management-natural-resources-chapter-wise-important-questions-class-10-science/'}]}))
-    # loop.run_until_complete(get_qna_learncbse(hindi_links_list))
     loop.run_until_complete(get_qna_learncbse(hindi_links_list))
-    # loop.run_until_complete(get_qna_learncbse({'Maths': [{'Real Numbers': 'https://www.learncbse.in/important-questions-for-class-10-maths-chapter-1/'}]}))
-    # loop.run_until_complete(get_maths_links())

@@ -110,8 +110,6 @@ def convert_to_dicts(elements, indexes):
             last_dict = {elements[indexes[-1]]: last_range}
             result.append(last_dict)
 
-
-
     return remove_duplicate_dicts(result)
 
 
@@ -120,21 +118,20 @@ def filter_similar_strings(data):
     seen = set()
 
     for item in data:
-        key = item.split(" ")[0]  # Extract the key (e.g., "question")
+        key = item.split(" ")[0]
         if key in seen:
-            continue  # Skip if we've already processed a similar key
+            continue
         similar_items = [x for x in data if x.startswith(key)]
-        if len(similar_items) > 1:  # Check if there are similar strings
-            longest_item = max(similar_items, key=len)  # Find the longest string
+        if len(similar_items) > 1:
+            longest_item = max(similar_items, key=len)
             result.append(longest_item)
         else:
-            result.append(item)  # Keep the string as it is if no similar strings found
+            result.append(item)
         seen.add(key)
 
     return result
 
 def split_data(data):
-    # data.sort()
     question_indexes = [index for index, item in enumerate(data) if item.lower().startswith('question')]
     answer_indexes = [index for index, item in enumerate(data) if item.lower().startswith('answer')]
     print(question_indexes, answer_indexes)
@@ -150,7 +147,6 @@ async def add_to_database(subject: str, chapter: str, data: list):
     await db[subject].insert_one({chapter: data})
     print(f"Successfully inserted {chapter} ({subject}).")
 
-# THIS TOOK ME FUCKING 12 HOURS TO FIGURE OUT 😭
 async def get_qna_learncbse(links_list: dict):
     for subject, links_list_ in links_list.items():
         for obj in links_list_:
@@ -161,9 +157,7 @@ async def get_qna_learncbse(links_list: dict):
                     async with session.get(link) as response:
                         soup = BeautifulSoup(await response.text(), 'html.parser')
                         content_div = soup.find("div", class_="entry-content")
-                        # print(content_div)
                         
-                        # print(qna_headings_indexes)
                         new_content_div = []
                         formatted_data = {}
                         for element in content_div:
@@ -193,9 +187,7 @@ async def get_qna_learncbse(links_list: dict):
                                 if type in element:
                                     qna_headings_indexes.append(new_content_div.index(element))
                             
-                        # print(new_content_div)
                         sub_lists = convert_to_dicts(list(new_content_div), qna_headings_indexes)
-                        # print(sub_lists)
                         questions = []
                         questions_index = []
                         answers = []
@@ -208,12 +200,8 @@ async def get_qna_learncbse(links_list: dict):
                                 sum_list = sum((string.split("\n") for string in question_list), [])
                                 all.extend(sum_list)
                         
-                        # for string in new_all:
-                        #     all.extend(string.split("\n"))
-
                         all = [x.strip() for x in all if (x != "")]
                         all = [x.strip() for x in all if (x!= "\n")]
-                        # print(all)
                         
                         results = []
                         question_indexes = [index for index, item in enumerate(all) if item.lower().startswith('question')]
@@ -230,24 +218,10 @@ async def get_qna_learncbse(links_list: dict):
                                         answer_text = '\n'.join(all[answer_indexes[i]+1:question_indexes[i+1]])
                                     else:
                                         answer_text = '\n'.join(all[answer_indexes[i]+1:])
-                                    # answer_text = ' '.join(all[answer_indexes[i] + 1:question_indexes[i+1]])
                                     results.append({'question_text': question_text, 'answer_text': answer_text})
                                 except Exception as e:
                                     continue
-                            
-                            # answer_index = answer_indexes[i]
-                            # question_text = ' '.join(all[question_index + 1:answer_index])
-                            # # print(all[question_index + 1:answer_index], question_index +1, answer_index)
 
-                            # if i + 1 < len(question_indexes):
-                            #     next_question_index = question_indexes[i + 1]
-                            #     answer_text = ' '.join(all[answer_index + 1:question_index])
-                            # else:
-                            #     answer_text = ' '.join(all[answer_index + 1:question_index + 1])
-
-                            # results.append({'question_text': question_text, 'answer_text': answer_text})
-
-                            # Check for the last question
                             if question_index == question_indexes[-1]:
                                 question_text = '\n'.join(all[question_indexes[-1] + 1:answer_indexes[-1]])
                                 answer_text = '\n'.join(all[answer_indexes[-1] + 1:])
@@ -255,77 +229,8 @@ async def get_qna_learncbse(links_list: dict):
 
                         print(results)
                         await add_to_database(subject=subject, chapter=title, data=results)
-                        # return results
 
-                        
-                        # for category in sub_lists:
-                        #     for question_type, question_list in category.items():
-                        #         formatted_data.setdefault(question_type, [])
-                        #         for question in question_list:
-                        #             if len(question.split("Answer:")) == 2:
-                        #                 questions_index.append(question_list.index(question))
-                        #                 question_text, answer_text = question.split("Answer:")[0:2]
-                        #                 questions.append(question_text)
-                        
-                        # for category in sub_lists:
-                        #     for question_type, question_list in category.items():
-                        #         formatted_data.setdefault(question_type, [])
-                        #         for question in question_list:
-                        #             if len(question.split("Answer:")) == 2:
-                        #                 print(question_list.index(question))
-                        #                 answers_index.append(question_list.index(question))
-                        #                 question_text, answer_text = question.split("Answer:")[0:2]
-                        #                 answers.append(answer_text)
-                        #             if len(question.split("Answer:")) == 1:
-                        #                 if answer_text and not question in answer_text:
-                        #                     answer_text += "\n" + question
-                        #             if answer_text not in answers:
-                        #                     # print(question_list.index(question) + 1)
-                        #                 if (question_list.index(question) + 1) in questions_index:
-                        #                     print((question_list.index(question) + 1),"\n" + question)
-                        #                     answers.append(answer_text)
-                        # answers = filter_similar_strings(answers)
-                            
-                                # for question in question_list:
-                                #     string_parts = question.split("\n")
-                                #     question_text = ''
-                                #     ans_text = ''
-                                #     question_index = 0
-                                #     ans_index = 0
-                                #     for part in string_parts:
-                                #         if part.lower().startswith('question'):
-                                #             question_index = string_parts.index(part)
-                                #             question_text += part + '\n'
-                                #         for i in range(question_index, len(string_parts)):
-                                #             if string_parts[i].lower().startswith("answer"):
-                                #                 break
-                                #             else: question_text += "\n" + string_parts[i]
-                                #     for part in string_parts:
-                                #         if part.lower().startswith('answer'):
-                                #             ans_index = string_parts.index(part)
-                                #             ans_text += part + '\n'
-                                #         for i in range(ans_index, len(string_parts)):
-                                #             if string_parts[i].lower().startswith("question"):
-                                #                 break
-                                #             else: ans_text += "\n" + string_parts[i]
-
-                                    
-                                #     question_text = question_text.strip()
-                                #     ans_text = ans_text.strip()
-                                    
-                                #     formatted_data[question_type].append({question_text: ans_text})
-
-                        # print(formatted_data)
-                    
-                    
-                
-
-    
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
-    # loop.run_until_complete(get_qna_learncbse({'Science': [{'Management of Natural Resources':\
-    #     'https://www.learncbse.in/management-natural-resources-chapter-wise-important-questions-class-10-science/'}]}))
     loop.run_until_complete(get_qna_learncbse({'Maths': [{'Real Numbers': 'https://www.learncbse.in/important-questions-for-class-10-maths-chapter-1/'}, {'Polynomials': 'https://www.learncbse.in/important-questions-for-class-10-maths-chapter-2/'}, {'Pair of Linear Equations in Two Variables': 'https://www.learncbse.in/important-questions-for-class-10-maths-chapter-3/'}, {'Quadratic Equations': 'https://www.learncbse.in/important-questions-for-class-10-maths-chapter-4/'}, {'Arithmetic Progressions': 'https://www.learncbse.in/important-questions-for-class-10-maths-chapter-5/'}, {'Triangles': 'https://www.learncbse.in/important-questions-for-class-10-maths-chapter-6/'}, {'Coordinate Geometry': 'https://www.learncbse.in/important-questions-for-class-10-maths-chapter-7/'}, {'Introduction to Trigonometry': 'https://www.learncbse.in/important-questions-for-class-10-maths-chapter-8/'}, {'Some Applications of Trigonometry': 'https://www.learncbse.in/important-questions-for-class-10-maths-chapter-9/'}, {'Circles': 'https://www.learncbse.in/important-questions-for-class-10-maths-chapter-10/'}, {'Constructions': 'https://www.learncbse.in/important-questions-for-class-10-maths-chapter-11/'}, {'Areas Related to Circles': 'https://www.learncbse.in/important-questions-for-class-10-maths-chapter-12/'}, {'Surface Areas and Volumes': 'https://www.learncbse.in/important-questions-for-class-10-maths-chapter-13/'}, {'Statistics': 'https://www.learncbse.in/important-questions-for-class-10-maths-chapter-14/'}, {'Probability': 'https://www.learncbse.in/important-questions-for-class-10-maths-chapter-15/'}]}))
-    # loop.run_until_complete(get_qna_learncbse({'Maths': [{'Real Numbers': 'https://www.learncbse.in/important-questions-for-class-10-maths-chapter-1/'}]}))
-    # loop.run_until_complete(get_maths_links())
