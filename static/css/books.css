@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+
 .links {
 	display: flex;
 	flex-direction: row;
@@ -92,7 +94,7 @@ html {
 p {
     color: #fff;
     font-weight: 100;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+    font-family: 'Roboto Slab', serif;
 }
 
 h2 {
@@ -102,5 +104,5 @@ h2 {
     font-weight: 500;
     margin-bottom: 5px;
     position: relative;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+    font-family: 'Roboto Slab', serif;
 }

@@ -121,6 +121,20 @@ def class_10_english():
     prose_chapter_names = [list(x)[1] for x in data]
     return render_template('English.html', subject = "English", poems_chapter_names=poems_chapter_names, prose_chapter_names = prose_chapter_names)
 
+
+@app.route("/maths")
+def class_10_maths():
+    cursor = db["Maths"].find({})
+    data = []
+    for x in cursor:
+        data.append(x)
+    # print(data)
+
+    maths_chapter_names = [list(x)[1] for x in data]
+    # print(maths_chapter_names)
+    return render_template('Maths.html', subject = "Mathematics", maths_chapter_names=maths_chapter_names)
+
+
 @app.route("/sst")
 def class_10_sst():
     cursor = db["Economics"].find({})

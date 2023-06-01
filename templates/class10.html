@@ -38,8 +38,16 @@
       <table class="subjects" align="center">
         <tr class="subject"><td><a href="http://127.0.0.1:5000/english">
           <img class="sub" src="{{url_for('static', filename='img/English.jpeg')}}"></a></td></tr>
-        <tr class="subject"><td><img class="sub" src="{{url_for('static', filename='img/maths.jpeg')}}"></td></tr>
-        <tr class="subject"><td><img class="sub" src="{{url_for('static', filename='img/science.jpeg')}}"></td></tr>
+        <tr class="subject"><td>
+          <a href="http://127.0.0.1:5000/maths">
+            <img class="sub" src="{{url_for('static', filename='img/maths.jpeg')}}">
+          </a>
+        </td></tr>
+        <tr class="subject"><td>
+          <a href="http://127.0.0.1:5000/science">
+            <img class="sub" src="{{url_for('static', filename='img/science.jpeg')}}">
+          </a>
+        </td></tr>
         <tr class="subject"><td>
           <a href="http://127.0.0.1:5000/sst">
             <img class="sub" src="{{url_for('static', filename='img/sst.jpeg')}}">
