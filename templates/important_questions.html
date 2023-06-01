@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TopperHQ™ - {{subject | title}} (10)</title>
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/subjects.css')}}">
-
+    <title>Class 10th Important Questions</title>
 </head>
 <body>
     <header>
@@ -27,19 +25,14 @@
               </a>
     
           </div> 
-        </header>
-        <div class="content text">
-            <h1 class="subject-heading">
-                {{subject | title}} Important Question Answers
-            </h1>
-            <div class="chapters">
-                <ul>
-                    {% for heading in science_chapter_names %}
-                        <a href="http://127.0.0.1:5000/qna/{{heading | encode_name}}">
-                            <li class="chapter-heading">{{heading}}</li>
-                        </a>`
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
+    </header>
+
+    <div class="main-container">
+        <h1 class="heading-text">
+            Class 10th CBSE Important Questions
+        </h1>
         
+    </div>
+    
+</body>
+</html>

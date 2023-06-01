@@ -9,24 +9,25 @@
 
 </head>
 <body>
-    <header>
-      <div class="links">
-        <a href="Landing page.html">
-          <img src="{{url_for('static', filename='img/Home-removebg-preview.png')}}" height="30" width="25">
+  <header>
+    <div class="links">
+      <a href="Landing page.html">
+        <img src="{{url_for('static', filename='img/Home-removebg-preview.png')}}" height="30" width="25">
+      </a>
+      <a href="Books.html">
+        <img src="{{url_for('static', filename='img/book-removebg-preview.png')}}" height="40" width="25"></a>
+        <a href="http://127.0.0.1:5000/important_questions">
+          <img src="{{url_for('static', filename='img/Notes-removebg-preview.png')}}" height="30" width="23">
         </a>
-        <a href="http://127.0.0.1:5000/books">
-          <img src="{{url_for('static', filename='img/book-removebg-preview.png')}}" height="40" width="25">
-          <a href="Notes.html">
-            <img src="{{url_for('static', filename='img/Notes-removebg-preview.png')}}" height="30" width="23">
-          </a>
-          <a href="class10.html">
-            <img src="{{url_for('static', filename='img/Class 10 logo.png')}}" height="30" width="29">
-          </a>
-          <a href="">
-            <img src="{{url_for('static', filename='img/Class 12 logo.png')}}" height="30" width="29" style="cursor:not-allowed">
-          </a>
-          
-      </div>
+        <a href="http://127.0.0.1:5000/class10">
+          <img src="{{url_for('static', filename='img/Class 10 logo.png')}}" height="30" width="29">
+        </a>
+        <a href="">
+          <img src="{{url_for('static', filename='img/Class 12 logo.png')}}" height="30" width="29" style="cursor:not-allowed">
+        </a>
+
+    </div> 
+    </header>
       <br>
       <br>
       <br>
@@ -53,7 +54,12 @@
             <img class="sub" src="{{url_for('static', filename='img/sst.jpeg')}}">
           </a>
         </td></tr>
-        <tr class="subject"><td><img class="sub" src="{{url_for('static', filename='img/Hindi 1.png')}}"></td></tr>
+        <tr class="subject"><td>
+          <a href="http://127.0.0.1:5000/hindi">
+            <img class="sub" src="{{url_for('static', filename='img/Hindi 1.png')}}">
+
+          </a>
+        </td></tr>
       </table>
 </body>
 </html>

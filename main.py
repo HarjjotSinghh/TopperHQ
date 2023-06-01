@@ -1,3 +1,4 @@
+import unicodedata
 from flask import Flask, render_template, redirect, request
 import asyncio
 import pymongo
@@ -107,6 +108,10 @@ def class_10():
 def class_10_books():
     return render_template('Books.html')
 
+@app.route('/important_questions')
+def class_10_important_questions():
+    return render_template('important_questions.html')
+
 @app.route("/english")
 def class_10_english():
     cursor = db["English First Flight Poems"].find({})
@@ -122,17 +127,44 @@ def class_10_english():
     return render_template('English.html', subject = "English", poems_chapter_names=poems_chapter_names, prose_chapter_names = prose_chapter_names)
 
 
+@app.route("/hindi")
+def class_10_hidni():
+    cursor = db["हिंदी कृतिका"].find({})
+    data = []
+    for x in cursor:
+        data.append(x)
+    hindi_kritika_chapter_names = [list(x)[1] for x in data]
+    cursor = db["हिंदी क्षितिज"].find({})
+    data = []
+    for x in cursor:
+        data.append(x)
+    hindi_kshitij_chapter_names = [list(x)[1] for x in data]
+    return render_template('Hindi.html', subject = "Hindi", hindi_kritika_chapter_names=hindi_kritika_chapter_names, hindi_kshitij_chapter_names=hindi_kshitij_chapter_names)
+
+
 @app.route("/maths")
 def class_10_maths():
     cursor = db["Maths"].find({})
     data = []
     for x in cursor:
         data.append(x)
-    # print(data)
 
     maths_chapter_names = [list(x)[1] for x in data]
-    # print(maths_chapter_names)
     return render_template('Maths.html', subject = "Mathematics", maths_chapter_names=maths_chapter_names)
+
+
+@app.route("/science")
+def class_10_science():
+    cursor = db["Science"].find({})
+    data = []
+    for x in cursor:
+        data.append(x)
+    # print(data)
+
+    science_chapter_names = [list(x)[1] for x in data]
+    print(science_chapter_names)
+    # print(maths_chapter_names)
+    return render_template('Science.html', subject="Science", science_chapter_names=list(set(science_chapter_names)))
 
 
 @app.route("/sst")
@@ -159,13 +191,24 @@ def class_10_sst():
     pol_science_chapter_names = [list(x)[1] for x in data]
     return render_template('Social Science.html', subject = "Social Science", geo_chapter_names=geo_chapter_names, eco_chapter_names=eco_chapter_names, history_chapter_names=history_chapter_names, pol_science_chapter_names=pol_science_chapter_names)
 
+
 @app.template_filter('encode_name')
 def urlquote_filter(s):
     return urllib.parse.quote(s.encode('utf-8'))
 
+
 @app.template_filter('title')
 def urlquote_filter(s):
     return s.title()
+
+
+@app.template_filter('has_hindi')
+def has_hindi_character(string):
+    for char in string:
+        if 'DEVANAGARI' in unicodedata.name(char, ''):
+            return True
+    return False
+
 
 @app.route("/qna", defaults = {'data': 'null'})
 @app.route("/qna/<data>")

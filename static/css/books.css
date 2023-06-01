@@ -45,6 +45,7 @@ html {
     margin-top: 40px;
     gap: 40px;
     flex-wrap: wrap;
+    margin-top: 160px;
 }
 .container img{
     height: 400px;

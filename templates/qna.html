@@ -47,7 +47,6 @@
                         {% continue %}
                     {% endif %}
                     {% if qna['question_text'] != "" and (qna['ans_text'] != "" and qna['ans_text'] is not none) or (qna['answer_text'] != "" and qna['answer_text'] is not none) %}
-                        
                             <li>
                                 <p class="qna-text text mathjax">
                                     <span class="question-text">
@@ -56,7 +55,12 @@
                                     <br>
                                     <br>
                                     <br>
-                                    <span class="bold">Answer: </span>
+                                    {% if qna['question_text'] | has_hindi %}
+                                        <span class="bold">उत्तर: </span>
+                                    {% endif %}
+                                    {% if not qna['question_text'] | has_hindi %}
+                                        <span class="bold">Answer: </span>
+                                    {% endif %}
                                     <span class="answer-text">
                                         {{qna['ans_text'] if (qna['ans_text'] | length) > 1 else qna['answer_text']}}<br>
                                     </span>
