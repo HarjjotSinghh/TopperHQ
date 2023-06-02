@@ -17,4 +17,4 @@ points = generated_summary.split('. ')
 
 # Printing the 5 points with headings
 for i, point in enumerate(points):
-    print(f"Point {i+1}: {point}")
+    print(f"Point {i+1}: {point.capitalise()}")
