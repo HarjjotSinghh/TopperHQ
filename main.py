@@ -4,12 +4,13 @@ import asyncio
 import pymongo
 from pymongo import MongoClient
 import json
+import os
 
 import urllib
 
 app = Flask(__name__)
 config = json.load(open("./config.json", "r"))
-db_client = MongoClient(config["MONGO_DB_URL"])
+db_client = MongoClient(os.environ.get('MONGO_DB_URL'))
 db = db_client["TopperHQ"]
 
 
