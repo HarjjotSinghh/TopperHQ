@@ -33,12 +33,23 @@ html {
     margin-top: 80px;
     padding: 30px;
     padding-left: 80px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 .subject-heading {
     font-family: 'Roboto Slab', serif;
     font-weight: bolder;
     font-size: 2.5rem;
     color: black;
+    display: flex;
+    background: linear-gradient(5deg, #fff3fc, #e9f6fe);
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 30px;
 }
 .chapter-heading {
     font-family: 'Roboto Slab', serif;
