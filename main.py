@@ -5,12 +5,15 @@ import pymongo
 from pymongo import MongoClient
 import json
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 import urllib
 
 app = Flask(__name__)
 # config = json.load(open("./config.json", "r"))
-db_client = MongoClient(os.environ.get('MONGO_DB_URL'))
+print(os.environ.get('MONGO_DB_URL'))
+db_client = MongoClient(os.getenv('MONGO_DB_URL'), port=4000)
 db = db_client["TopperHQ"]
 
 
@@ -115,11 +118,19 @@ def class_10_important_questions():
 
 @app.route("/english")
 def class_10_english():
-    cursor = db["English First Flight Poems"].find({})
-    data = []
-    for x in cursor:
-        data.append(x)
-    poems_chapter_names = [list(x)[1] for x in data]
+    cursor_ = db["English First Flight Poems"].find({})
+    data_= []
+    # print(cursor.next())
+    # while cursor.alive:
+    #     try:
+    #         document = cursor.next()
+    #         # print(document)
+    #     except StopIteration:
+    #         break
+    for x in cursor_:
+        data_.append(x)
+        print(x)
+    poems_chapter_names = [list(x)[1] for x in data_]
     cursor = db["English First Flight Prose"].find({})
     data = []
     for x in cursor:
@@ -163,7 +174,7 @@ def class_10_science():
     # print(data)
 
     science_chapter_names = [list(x)[1] for x in data]
-    print(science_chapter_names)
+    # print(science_chapter_names)
     # print(maths_chapter_names)
     return render_template('Science.html', subject="Science", science_chapter_names=list(set(science_chapter_names)))
 
@@ -219,17 +230,17 @@ def qna(data :str):
         return "Invalid URL"
     decoded_chapter_name = urllib.parse.unquote(chapter_name)
     decoded_chapter_name = decoded_chapter_name
-    print(decoded_chapter_name, data)
+    # print(decoded_chapter_name, data)
     all_chapter_names = fetch_all_object_names_from_all_collections()
     if decoded_chapter_name in all_chapter_names:
         data_qna = search_objects_by_name(decoded_chapter_name)
         if decoded_chapter_name in english_chapter_names:
-            print(data_qna[0])
+            # print(data_qna[0])
             new_data = []
             for i in range(len(data_qna[0]) - 1):
-                print(len(data_qna[0]))
-                print(i)
-                print(i+1)
+                # print(len(data_qna[0]))
+                # print(i)
+                # print(i+1)
                 new_data.append({"answer_text": data_qna[0][i+1]["answer_text"], "question_text": data_qna[0][i]["question_text"]})
             data_qna[0] = new_data
                 
