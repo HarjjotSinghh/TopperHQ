@@ -101,6 +101,10 @@ def page_not_found(e):
 def welcome():
     return render_template('Landing page.html')
 
+@app.route('/')
+def welcome_():
+    return render_template('Landing page.html')
+
 
 @app.route('/class10')
 def class_10():
