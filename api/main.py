@@ -1,9 +1,6 @@
 import unicodedata
 from flask import Flask, render_template, redirect, request
-import asyncio
-import pymongo
 from pymongo import MongoClient
-import json
 import os
 from dotenv import load_dotenv
 load_dotenv()
