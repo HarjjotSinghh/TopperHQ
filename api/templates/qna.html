@@ -37,15 +37,6 @@
         <div class="qna-container">
             <ol style="list-style: none;">
                 {% for qna in data_qna %}
-                    {% if qna['question_text'] == "" %}
-                        {% continue %}
-                    {% endif %}
-                    {% if qna['ans_text'] == "" %}
-                        {% continue %}
-                    {% endif %}
-                    {% if qna['answer_text'] == "" %}
-                        {% continue %}
-                    {% endif %}
                     {% if qna['question_text'] != "" and (qna['ans_text'] != "" and qna['ans_text'] is not none) or (qna['answer_text'] != "" and qna['answer_text'] is not none) %}
                             <li>
                                 <p class="qna-text text mathjax">

@@ -91,6 +91,11 @@ def search_objects_by_name(name : str):
     return matching_objects
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    print(e)
+    return redirect("/")
+
 
 @app.route('/welcome')
 def welcome():
