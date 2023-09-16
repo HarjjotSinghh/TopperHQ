@@ -7,7 +7,7 @@ load_dotenv()
 
 import urllib
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='./templates', static_folder='./static')
 # config = json.load(open("./config.json", "r"))
 print(os.environ.get('MONGO_DB_URL'))
 db_client = MongoClient(os.getenv('MONGO_DB_URL'), port=4000)
